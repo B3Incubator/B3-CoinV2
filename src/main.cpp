@@ -742,6 +742,7 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CTransaction &tx, bool fLimitFree,
             isFNtransaction = true;
             //LogPrintf("Fundamental transaction amount %s \n", nFees);
         } else {
+
             //LogPrintf("Not Fundamental transaction\n");
             nFees = tx.GetValueIn(mapInputs) - tx.GetValueOut();
         }
@@ -1179,7 +1180,7 @@ int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, i
 	LogPrint("reation", "Init 5P Block:%d GetProofOfStakeReward(): create=%s nCoinAge=%d\n", pindexPrev->nHeight, FormatMoney(nSubsidy), nCoinAge);
 	return nSubsidy + nFees + staticreward;
 	}
-	if(pindexPrev->nHeight >= VAR10K*10) //100K
+	if(pindexPrev->nHeight >= VAR10K*11) //110K
 	{
 	nSubsidy = nSubsidy*20;
 	LogPrint("creation", "Init 20P Block:%d GetProofOfStakeReward(): create=%s nCoinAge=%d\n", pindexPrev->nHeight, FormatMoney(nSubsidy), nCoinAge);
@@ -1289,11 +1290,11 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
 
-    if ( Params().NetworkID() == CChainParams::TESTNET ){
-        CBigNum bnTestTarget;
-        bnTestTarget = CBigNum(~uint256(0) >> 9);
-        return bnTargetLimit.GetCompact();
-    }
+//    if ( Params().NetworkID() == CChainParams::TESTNET ){
+//        CBigNum bnTestTarget;
+//        bnTestTarget = CBigNum(~uint256(0) >> 20);
+//        return bnTargetLimit.GetCompact();
+//    }
 
     const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
     if (pindexPrev->pprev == NULL)
